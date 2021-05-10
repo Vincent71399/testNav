@@ -7,6 +7,8 @@ import About from './screens/about'
 
 import {Provider} from 'react-redux';
 import {store} from './redux/helpers/store';
+import DashboardScreen from './screens/dashboard';
+import ReviewDetailScreen from './screens/reviewDetails';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +47,7 @@ export default class App extends Component {
             value: 'xxx',
         }
 
-        this.storeData(item);
+        await this.storeData(item);
     }
 
     storeData = async (item) => {
@@ -74,13 +76,25 @@ export default class App extends Component {
         return '';
     }
 
+    configAnimation = {
+        animation: 'clamp',
+        config: {
+            stiffness: 1000,
+            damping: 500,
+            mass: 3,
+            overshootClamping: true,
+            restDisplacementThreshold: 0.01,
+            restSpeedThreshold: 0.01,
+        },
+    };
+
     render() {
         return (
             <Provider store={store}>
                 <NavigationContainer>
                     <Stack.Navigator>
-                        <Stack.Screen name="Home" component={Home} options={{
-                            title: 'Home Page',
+                        <Stack.Screen name="DashboardScreen" component={DashboardScreen} options={{
+                            title: 'Dashboard',
                             headerStyle: {
                                 backgroundColor: '#f4511e',
                             },
@@ -90,7 +104,12 @@ export default class App extends Component {
                                 alignSelf: 'center',
                             },
                         }}/>
-                        <Stack.Screen name="About" component={About}/>
+                        <Stack.Screen name="Review" component={ReviewDetailScreen} options={{
+                            transitionSpec: {
+                                open: this.configAnimation,
+                                close: this.configAnimation,
+                            },
+                        }}/>
                     </Stack.Navigator>
                 </NavigationContainer>
             </Provider>
