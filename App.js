@@ -103,6 +103,7 @@ export default class App extends Component {
                                 fontWeight: 'bold',
                                 alignSelf: 'center',
                             },
+                            headerShown: false,
                         }}/>
                         <Stack.Screen name="Review" component={ReviewDetailScreen} options={{
                             transitionSpec: {
